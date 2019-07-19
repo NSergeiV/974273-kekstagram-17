@@ -12,13 +12,23 @@ var randomCaseImg = function (min, max) {
   return Math.floor(Math.random() * (max - min) + min);
 };
 
+var randomCaseComment = function () {
+  var rand = Math.floor(Math.random() * (listOfComments.length - 1) + 1);
+  var arrayOfComments = [];
+  for (var b = 0; b < rand; b++) {
+    arrayOfComments[b] = listOfComments[Math.floor(Math.random() * listOfComments.length)];
+  }
+
+  return arrayOfComments;
+};
+
 var creatingUserList = function () {
 // Создание объектов массива описания фото пользователей
   for (var i = 0; i < 25; i++) {
     userPhotoDescription[i] = {
       url: 'photos/' + randomCaseImg(1, 25) + '.jpg',
       likes: randomCase(15, 200),
-      comments: listOfComments[randomCase(0, 6)],
+      comments: randomCaseComment().length,
       avatar: 'img/avatar-' + randomCaseImg(1, 6) + '.svg',
       name: firstName[randomCase(0, 8)]
     };
@@ -31,10 +41,10 @@ creatingUserList();
 var creatingCopies = function () {
   var elementFillsCopies = document.querySelector('.pictures');
   var fragment = document.createDocumentFragment();
-  var similarWizardTemplate = document.querySelector('#picture').content.querySelector('.picture');
+  var templateForPhotos = document.querySelector('#picture').content.querySelector('.picture');
 
   for (var j = 0; j < 25; j++) {
-    var element = similarWizardTemplate.cloneNode(true);
+    var element = templateForPhotos.cloneNode(true);
 
     element.querySelector('.picture__img').src = userPhotoDescription[j].url;
     element.querySelector('.picture__likes').textContent = userPhotoDescription[j].likes;
