@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм» [![Build status][travis-image]][travis-url]
 
 * Студент: [Сергей Никурашвили](https://up.htmlacademy.ru/javascript/17/user/974273).
-* Наставник: [Алексей Дорофеев](https://htmlacademy.ru/profile/id299055).
+* Наставник: [Александр Тимоновский](https://htmlacademy.ru/profile/id768125).
 
 ---
 
