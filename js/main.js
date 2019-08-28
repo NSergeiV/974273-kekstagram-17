@@ -56,3 +56,70 @@ var creatingCopies = function () {
 };
 
 creatingCopies();
+
+//  Форма редактирования изображения
+
+var imgUploadInput = document.querySelector('.img-upload__input');
+var imgUploadOverlay = document.querySelector('.img-upload__overlay');
+var buttonImgUploadCancel = document.querySelector('.img-upload__cancel');
+var popupImageEditing = document.querySelector('.img-upload__overlay');
+var effectLevel = popupImageEditing.querySelector('.effect-level');
+var buttonDepthEffect = popupImageEditing.querySelector('.effect-level__pin');
+var effectLevelDepth = popupImageEditing.querySelector('.effect-level__depth');
+var popupImagePreview = popupImageEditing.querySelector('.img-upload__preview');
+var effectsList = popupImageEditing.querySelector('.effects__list');
+var effectsItems = effectsList.querySelectorAll('li');
+var imgUploadScale = document.querySelector('.img-upload__scale');
+var scaleControlValue = imgUploadScale.querySelector('.scale__control--value');
+var imgUploadText = document.querySelector('.img-upload__text');
+var textDescription = imgUploadText.querySelector('.text__description');
+var ESC_BUTTON = 27;
+
+effectLevel.style.display = 'none';
+scaleControlValue.value = '100%';
+
+var onEffectsItemsOpen = function (item) {
+  item.addEventListener('mouseup', function () {
+    var result = item.querySelector('.effects__preview--none');
+    if (!result) {
+      popupImagePreview.style.filter = window.getComputedStyle(item.querySelector('span')).filter;
+      effectLevel.style.display = 'block';
+      buttonDepthEffect.style.left = '100%';
+      effectLevelDepth.style.width = '100%';
+    } else {
+      popupImagePreview.style.filter = window.getComputedStyle(item.querySelector('span')).filter;
+      effectLevel.style.display = 'none';
+    }
+  });
+};
+
+var onPopupEscClos = function (evt) {
+  if (evt.keyCode === ESC_BUTTON) {
+    if (textDescription !== document.activeElement) {
+      closPopup();
+    }
+  }
+};
+
+var openPopup = function () {
+  imgUploadOverlay.classList.remove('hidden');
+  document.addEventListener('keydown', onPopupEscClos);
+
+  for (var i = 0; i < effectsItems.length; i++) {
+    onEffectsItemsOpen(effectsItems[i]);
+  }
+};
+
+var closPopup = function () {
+  imgUploadOverlay.classList.add('hidden');
+  imgUploadInput.value = null;
+  document.removeEventListener('keydown', onPopupEscClos);
+};
+
+imgUploadInput.addEventListener('change', function () {
+  openPopup();
+});
+
+buttonImgUploadCancel.addEventListener('click', function () {
+  closPopup();
+});
